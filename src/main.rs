@@ -2,16 +2,21 @@ use rand::Rng;
 use std::collections::HashMap;
 
 fn main() {
-	let mut a = 0;
-	for n in 1..100001{
-		let value = iteration();
-		//println!("{}", value);
-		if value == true{
-			a += 1;
+	let mut distribution: Vec<u32> = Vec::new();
+	for n in 1..1001{
+		let mut a = 0;
+		for n in 1..1001{
+			let value = iteration();
+			//println!("{}", value);
+			if value == true{
+				a += 1;
+			}
 		}
-	}
-	println!("{}", (a as f32)/100000.0);
-
+		distribution.push(a);
+		println!("{}", (a as f32)/1000.0);
+    }
+    println!("{:?}",distribution);
+    distribution_analyses(distribution);
 }
 
 fn a_list_generator() -> Vec<(u32,u32)> {
@@ -48,3 +53,19 @@ fn iteration() -> bool {
 	}
 	false
 }
+
+fn  distribution_analyses(dist:Vec<u32>) {
+	let mut distribution_counter: HashMap<u32,u32> = HashMap::new();
+	for a in dist {
+	    match distribution_counter.get_mut(&a){
+			Some(n) => {
+				*n = (*n) +1;
+			},
+			None =>{
+				 distribution_counter.insert(a,1);
+			},
+		}
+	}
+	println!("{:?}",distribution_counter);
+	
+}	
